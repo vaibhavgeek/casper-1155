@@ -7,22 +7,26 @@ The multitoken contract will allow the creation of multiple tokens. These tokens
 ## Milestone 1 
 - Clone and test the NFT logic locally based on ERC 721 written by Casper Team. [Complete]
 - Modify the logic folder (events.rs, lib.rs and tests.rs) to have the proper multi token standard on casper. [Complete] 
+
 Expected Date of Completion: 12.10.21
 
 ## Milestone 2 
 - Modify the main folder to have the correct logic associated with multi token standard (storage.rs, data.rs, entrypoints.rs, lib.rs)
 - Deploy contract on testnet 
 - Create documentation based on entrypoints.rs so that the contract can be used by anyone. 
+
 Expeced Date of Completion: 19.10.21
 
 ## Milestone 3 
 - Create react based frontend component which enables all setter and getters with signed keys. 
-- Create a react npm library to enable it along with an example application 
+- Create a react npm library to enable it along with an example application
+
 Expeced Date of Completion: 26.10.21
 
 ## Milestone 4
 - Smart Contract audit and revisions 
 - Revisions in javascript library
+
 Expeced Date of Completion: 01.11.21
 
 This is a response to the bounty mentioned by casper network, https://gitcoin.co/issue/casper-network/gitcoin-hackathon/14/100026580
