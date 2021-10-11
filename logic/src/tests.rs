@@ -19,7 +19,7 @@ struct TestStorage {
     total_supply: U256,
     tokens: BTreeMap<Key, Vec<TokenId>>,
     token_metas: BTreeMap<TokenId, Meta>,
-    balances: BTreeMap<Key, U256>,
+    balances: BTreeMap<Key, BTreeMap<TokenId, U256>>,
     belongs_to: BTreeMap<TokenId, Key>,
     urefs: BTreeMap<URef, TokenId>,
     token_id_generator: u32,
@@ -39,6 +39,7 @@ impl TestStorage {
             token_metas: BTreeMap::new(),
             urefs: BTreeMap::new(),
             token_id_generator: 1,
+            values: BTreeMap::new(),
         }
     }
 }
@@ -56,18 +57,18 @@ impl CEP47Storage for TestStorage {
         self.meta.clone()
     }
 
-    fn balance_of(&self, owner: &Key) -> U256 {
-        let owner_balance = self.balances.get(owner);
+    fn balance_of(&self, owner: &Key, token_id: &TokenId) -> U256 {
+        let owner_balance = self.balances.get(owner, token_id);
         owner_balance.cloned().unwrap_or_default()
     }
 
-    fn owner_of(&self, token_id: &TokenId) -> Option<Key> {
-        let owner = self.belongs_to.get(token_id);
-        owner.cloned()
-    }
+    // fn owner_of(&self, token_id: &TokenId) -> Option<Key> {
+    //     let owner = self.belongs_to.get(token_id);
+    //     owner.cloned()
+    // }
 
-    fn total_supply(&self) -> U256 {
-        self.total_supply
+    fn total_supply(&self, token_id: &TokenId) -> U256 {
+        self.total_supply(token_id)
     }
 
     fn token_meta(&self, token_id: &TokenId) -> Option<Meta> {
@@ -87,18 +88,20 @@ impl CEP47Storage for TestStorage {
         self.paused = false;
     }
 
-    fn mint_many(&mut self, recipient: &Key, token_ids: &Vec<TokenId>, token_metas: &Vec<Meta>) {
+    fn mint_many(&mut self, recipient: &Key, token_ids: &Vec<TokenId>, token_metas: &Vec<Meta>, values: &Vec<U256>) {
+        
+        
         let amount = token_ids.len();
 
         // Update balance.
         let recipient_balance = self.balances.get(recipient).copied().unwrap_or_default();
-        let recipient_new_balance = recipient_balance + amount;
+        let recipient_new_balance = recipient_balance + (amount*values);
         self.balances.insert(*recipient, recipient_new_balance);
 
         self.total_supply = self.total_supply + amount;
 
         // Mint tokens.
-        for (token_id, token_meta) in token_ids.iter().zip(token_metas) {
+        for (token_id, token_meta, value) in izip!(token_ids, tokend_metas, values) {
             self.token_metas
                 .insert(token_id.clone(), token_meta.clone());
             self.belongs_to.insert(token_id.clone(), *recipient);
