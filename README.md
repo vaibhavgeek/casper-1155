@@ -17,16 +17,4 @@ Expected Date of Completion: 12.10.21
 
 Expeced Date of Completion: 19.10.21
 
-## Milestone 3 
-- Create react based frontend component which enables all setter and getters with signed keys. 
-- Create a react npm library to enable it along with an example application
-
-Expeced Date of Completion: 26.10.21
-
-## Milestone 4
-- Smart Contract audit and revisions 
-- Revisions in javascript library
-
-Expeced Date of Completion: 01.11.21
-
 This is a response to the bounty mentioned by casper network, https://gitcoin.co/issue/casper-network/gitcoin-hackathon/14/100026580
